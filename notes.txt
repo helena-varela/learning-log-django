@@ -1,0 +1,51 @@
+ANOTAÇÕES:
+1. Criação do ambiente virtual:
+    python3 -m venv nome_do_ambiente
+    source nome_do_ambiente/bin/activate (para ativar o ambiente virtual)
+    pip install Django
+    django-admin startproject learning_log .
+
+2. Pastas do Django:
+    urls.py diz ao navegador qual páginas acessar
+    models: forma de controlar e manipular o banco de dados
+
+3. Instalação do BD Browser (Linux):
+    sudo apt update
+    sudo apt install sqlitebrowser -y
+    sqlitebrowser
+
+4. Comandos Django arquivo manage.py:
+    4.1 
+        python manage.py startapp nome_do_app 
+        python manage.py makemigrations nome_do_app: atualiza o banco de dados
+        python manage.py migrate: cria um banco de dados
+        python manage.py runserver: roda um servidor
+
+    4.2 Shell interativo - testes sem acessar o painel administrativo
+        python nome_do_app.models import classe_de_models
+        classe_de_models.objects.all() - > vai acessar todos os objetos da classe que foram registrados
+        ou também pode fazer: 
+        topic = Topic.objects.all()
+            print(topic.id, topic())
+        também pode usar o .get:
+        t = Topic.objects.get(id=1)
+        t.text
+        t.date_added
+        t.entry_set.all()
+
+5. O que fazer:
+    nos settings adicionar o nome do app para o django reconhecer a pasta como app
+
+6. Criação de admin:
+    python manage.py createsuperuser
+    na pasta admin registra um modelo no painel de administração do Django (admin.site.register(Topic))
+
+7. models
+    ForeignKey = cria um vínculo entre dois modelos
+    def __str__(self): no painel administrativo mostra o campo de bancos de dados
+
+8. Método GET e POST 
+    8.1 GET
+        É utilizado somente quando um formulário não altera os dados do usuário (como um formulário de busca)
+    8.2 POST
+        É utilizado quando os dados resultarem em uma alteração no banco de dados
