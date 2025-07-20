@@ -1,0 +1,12 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+    <p>Editar entrada: {{ entry }}</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div style="margin-bottom: 20px;">
+            <input type="text" name="entry-text" value="{{ entry.text }}">
+        </div>
+        <button type="submit">Editar</button>
+    </form>
+{% endblock content %}
