@@ -1,0 +1,9 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+    <p>Deletar entrada</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Deletar</button>
+    </form>
+{% endblock content %}
