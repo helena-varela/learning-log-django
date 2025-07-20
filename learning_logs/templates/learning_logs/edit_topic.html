@@ -1,0 +1,12 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+    <p>Editar Tópico: {{ topic }}</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div style="margin-bottom: 20px;">
+            <input type="text" name="topic-text" value="{{ topic.text }}">
+        </div>
+        <button type="submit">Editar</button>
+    </form>
+{% endblock content %}

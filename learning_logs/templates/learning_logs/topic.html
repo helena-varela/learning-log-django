@@ -2,6 +2,7 @@
 
 {% block content %}
     <h3> Tópico: {{ topic }} </h3>
+    <p><a href="{% url 'edit_topic' topic.id %}">Editar tópico</a></p>
     <a href="{% url 'delete_topic' topic.id %}" onclick="return confirm('Tem certeza que deseja deletar este tópico?')">
     Deletar Tópico
     </a>

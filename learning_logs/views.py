@@ -64,6 +64,18 @@ def edit_entry(request, entry_id):
     context = {'entry': entry}
     return render(request, 'learning_logs/edit_entry.html', context)
 
+def edit_topic(request, topic_id):
+    """Editar tópico"""
+    topic = Topic.objects.get(id=topic_id)
+    if request.method == 'POST':
+        topic_text = request.POST.get("topic-text")
+        topic.text = topic_text
+        topic.save()
+        return HttpResponseRedirect(reverse('topic', args =[topic.id]))
+
+    context = {'topic': topic}
+    return render(request, 'learning_logs/edit_topic.html', context)
+
 def delete_entry(request, entry_id):
     """Deletar uma entrada"""
     entry = Entry.objects.get(id=entry_id)
