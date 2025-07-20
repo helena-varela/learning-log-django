@@ -67,10 +67,6 @@ def edit_entry(request, entry_id):
 def delete_entry(request, entry_id):
     """Deletar uma entrada"""
     entry = Entry.objects.get(id=entry_id)
+    entry.delete()
+    return HttpResponseRedirect(reverse('topic', args = [entry.topic.id]))
     
-    if request.method == 'POST':
-        entry.delete()
-        return HttpResponseRedirect(reverse('topic', args = [entry.topic.id]))
-    
-    context = {'entry':entry}
-    return render(request, 'learning_logs/delete_entry.html', context)

@@ -12,7 +12,9 @@
             <p>{{ entry.text | linebreaks }}</p>
             <a href="{% url 'edit_entry' entry.id %}">Editar entrada</a>
             <br>
-            <a href="{% url 'delete_entry' entry.id %}">Deletar entrada</a>
+            <a href="{% url 'delete_entry' entry.id %}" onclick="return confirm('Tem certeza que deseja deletar esta entrada?')">
+                Deletar entrada
+            </a>
         </li>
 
         {% empty %}
@@ -23,4 +25,4 @@
 
         {% endfor %}
     </ul>
-    {% endblock content %}
+{% endblock content %}
