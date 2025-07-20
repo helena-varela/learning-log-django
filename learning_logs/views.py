@@ -70,3 +70,8 @@ def delete_entry(request, entry_id):
     entry.delete()
     return HttpResponseRedirect(reverse('topic', args = [entry.topic.id]))
     
+def delete_topic(request, topic_id):
+    """Deleta um tópico"""
+    topic = Topic.objects.get(id=topic_id)
+    topic.delete()
+    return HttpResponseRedirect(reverse('topics'))
