@@ -1,0 +1,15 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+    <h1>Login</h1>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <input type="text" name="username" placeholder="Digite seu username">
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Digite sua senha">
+        </div>
+        <button type="submit">Login</button>
+    </form>
+{% endblock content %}
