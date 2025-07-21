@@ -3,17 +3,20 @@ from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
     """Página principal do Learning Log"""
     return render(request, 'learning_logs/index.html')
 
+@login_required
 def topics(request):
     """Mostra todos os assuntos"""
     topics = Topic.objects.order_by('date_added')
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)
 
+@login_required
 def topic(request, topic_id):
     """Mostra um único assunto e todas as suas entradas."""
     topic = Topic.objects.get(id = topic_id)
@@ -22,6 +25,7 @@ def topic(request, topic_id):
                'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
 
+@login_required
 def new_topic(request):
     """Adiciona um novo assunto."""
     if request.method != 'POST':
@@ -35,6 +39,7 @@ def new_topic(request):
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
 
+@login_required
 def new_entry(request, topic_id):
     """Adiciona uma nova entrada."""
     topic = Topic.objects.get(id=topic_id)
@@ -52,6 +57,7 @@ def new_entry(request, topic_id):
     context = {'topic': topic, 'form': form}    
     return render(request, 'learning_logs/new_entry.html',context) 
 
+@login_required
 def edit_entry(request, entry_id):
     """Editar uma entrada"""
     entry = Entry.objects.get(id=entry_id)
@@ -64,6 +70,7 @@ def edit_entry(request, entry_id):
     context = {'entry': entry}
     return render(request, 'learning_logs/edit_entry.html', context)
 
+@login_required
 def edit_topic(request, topic_id):
     """Editar tópico"""
     topic = Topic.objects.get(id=topic_id)
@@ -76,12 +83,14 @@ def edit_topic(request, topic_id):
     context = {'topic': topic}
     return render(request, 'learning_logs/edit_topic.html', context)
 
+@login_required
 def delete_entry(request, entry_id):
     """Deletar uma entrada"""
     entry = Entry.objects.get(id=entry_id)
     entry.delete()
     return HttpResponseRedirect(reverse('topic', args = [entry.topic.id]))
-    
+
+@login_required  
 def delete_topic(request, topic_id):
     """Deleta um tópico"""
     topic = Topic.objects.get(id=topic_id)
