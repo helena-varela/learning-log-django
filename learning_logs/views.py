@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -12,7 +12,7 @@ def index(request):
 @login_required
 def topics(request):
     """Mostra todos os assuntos"""
-    topics = Topic.objects.order_by('date_added')
+    topics = Topic.objects.filter(owner=request.user).order_by('date_added')
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)
 
@@ -28,14 +28,16 @@ def topic(request, topic_id):
 @login_required
 def new_topic(request):
     """Adiciona um novo assunto."""
-    if request.method != 'POST':
-        form = TopicForm()
-    else:
+    if request.method == 'POST':
         form = TopicForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_topic = form.save(commit=False)
+            new_topic.owner = request.user
+            new_topic.save()
             return HttpResponseRedirect(reverse('topics'))
-
+    else:
+        form = TopicForm()
+        
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
 
