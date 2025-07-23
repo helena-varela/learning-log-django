@@ -4,7 +4,9 @@ from .forms import TopicForm, EntryForm
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from . import utils
 # Create your views here.
+
 def index(request):
     """Página principal do Learning Log"""
     return render(request, 'learning_logs/index.html')
@@ -20,6 +22,8 @@ def topics(request):
 def topic(request, topic_id):
     """Mostra um único assunto e todas as suas entradas."""
     topic = Topic.objects.get(id = topic_id)
+    utils.verificar_user(request, topic)
+    
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic,
                'entries': entries}
@@ -45,7 +49,8 @@ def new_topic(request):
 def new_entry(request, topic_id):
     """Adiciona uma nova entrada."""
     topic = Topic.objects.get(id=topic_id)
-    
+    utils.verificar_user(request, topic)
+
     if request.method != 'POST':
         form = EntryForm()
     else:
@@ -63,6 +68,8 @@ def new_entry(request, topic_id):
 def edit_entry(request, entry_id):
     """Editar uma entrada"""
     entry = Entry.objects.get(id=entry_id)
+    utils.verificar_user(request, entry.topic)
+
     if request.method == 'POST':
         entry_text = request.POST.get("entry-text")
         entry.text = entry_text
@@ -76,6 +83,7 @@ def edit_entry(request, entry_id):
 def edit_topic(request, topic_id):
     """Editar tópico"""
     topic = Topic.objects.get(id=topic_id)
+    utils.verificar_user(request, topic)
     if request.method == 'POST':
         topic_text = request.POST.get("topic-text")
         topic.text = topic_text
@@ -89,6 +97,7 @@ def edit_topic(request, topic_id):
 def delete_entry(request, entry_id):
     """Deletar uma entrada"""
     entry = Entry.objects.get(id=entry_id)
+    utils.verificar_user(request, entry.topic, "Não apague a entrada dos outros usuários")
     entry.delete()
     return HttpResponseRedirect(reverse('topic', args = [entry.topic.id]))
 
@@ -96,5 +105,6 @@ def delete_entry(request, entry_id):
 def delete_topic(request, topic_id):
     """Deleta um tópico"""
     topic = Topic.objects.get(id=topic_id)
-    topic.delete()
+    utils.verificar_user(request, topic, "Você não pode apagar o tópico de outro usuário")
+    topic.delete()  
     return HttpResponseRedirect(reverse('topics'))
