@@ -2,10 +2,26 @@
 
 {% block content %}
 
-    <form action = "{% url 'new_topic' %}" method = 'post'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button name = "submit">Adicionar</button>
-    </form>
+<div class="container mt-4">
+    <div class="card p-4 shadow-sm" style="max-width: 500px; margin: 0 auto;">
+        <h4 class="mb-4" style="color: #a776f5">Novo tópico</h4>
+        
+        <form action="{% url 'new_topic' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" 
+                       name="text" 
+                       class="form-control"
+                       placeholder="Digite o nome do tópico"
+                       style="border: 1px solid #a776f5; padding: 8px;">
+            </div>
+            <button type="submit" 
+                    class="btn text-white" 
+                    style="background-color: #a776f5; padding: 8px 16px;">
+                Adicionar
+            </button>
+        </form>
+    </div>
+</div>
 
 {% endblock content %}

@@ -1,32 +1,42 @@
 {% extends 'learning_logs/base.html' %}
 
 {% block content %}
-    <h3> Tópico: {{ topic }} </h3>
-    <p><a href="{% url 'edit_topic' topic.id %}">Editar tópico</a></p>
-    <a href="{% url 'delete_topic' topic.id %}" onclick="return confirm('Tem certeza que deseja deletar este tópico?')">
-    Deletar Tópico
-    </a>
-    <p> Entradas: </p>
-    <p><a href = "{% url 'new_entry' topic.id %}">Adicione uma nova entrada</a></p>
-    <ul>
+<div class="p-3">
+   
+    <h3 class="mb-3" style="color: #a42ee9">Tópico: {{ topic }}</h3>
+    
+   
+    <p class="mb-2">
+        <a href="{% url 'edit_topic' topic.id %}" class="btn btn-sm btn-outline-secondary me-2">Editar tópico</a>
+        <a href="{% url 'delete_topic' topic.id %}" 
+           class="btn btn-sm btn-outline-danger"
+           onclick="return confirm('Tem certeza que deseja deletar este tópico?')">
+            Deletar Tópico
+        </a>
+    </p>
+
+    <p class="fw-bold" style="color: #a42ee9">Entradas:</p>
+    <p class="mb-3">
+        <a href="{% url 'new_entry' topic.id %}" class="btn btn-sm btn-outline-secondary me-2">Adicione uma nova entrada</a>
+    </p>
+    
+    <ul class="list-unstyled">
         {% for entry in entries %}
-
-        <li>
-            <p>{{ entry.date_added | date:'M d, Y H:i' }}</p>
-            <p>{{ entry.text | linebreaks }}</p>
-            <a href="{% url 'edit_entry' entry.id %}">Editar entrada</a>
-            <br>
-            <a href="{% url 'delete_entry' entry.id %}" onclick="return confirm('Tem certeza que deseja deletar esta entrada?')">
-                Deletar entrada
-            </a>
+        <li class="mb-4 p-3 border rounded">
+            <p class="text-muted small mb-1">{{ entry.date_added|date:'M d, Y H:i' }}</p>
+            <p class="mb-2">{{ entry.text|linebreaks }}</p>
+            <div>
+                <a href="{% url 'edit_entry' entry.id %}" class="btn btn-sm btn-outline-secondary me-2">Editar entrada</a>
+                <a href="{% url 'delete_entry' entry.id %}" 
+                   class="btn btn-sm btn-outline-danger"
+                   onclick="return confirm('Tem certeza que deseja deletar esta entrada?')">
+                    Deletar entrada
+                </a>
+            </div>
         </li>
-
         {% empty %}
-
-        <li>
-            Não há registro!
-        </li>
-
+        <li class="text-muted">Ainda não há registro!</li>
         {% endfor %}
     </ul>
+</div>
 {% endblock content %}

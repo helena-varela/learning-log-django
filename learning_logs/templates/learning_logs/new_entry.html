@@ -1,13 +1,29 @@
 {% extends "learning_logs/base.html" %}
 
 {% block content %}
-<p><a href="{% url 'topic' topic.id %}">{{ topic }}</a></p>
 
-<p>Adicionar nova entrada:</p>
-<form action = "{% url 'new_entry' topic.id %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button name = "submit">Adicionar nova entrada</button>
-</form>
+<div class="container mt-4">
+    <div class="card p-4 shadow-sm" style="max-width: 600px; margin: 0 auto;">
+        <p class="mb-4">
+            <a href="{% url 'topic' topic.id %}" class="text-decoration-none fs-5 fw-bold" style="color: #a776f5;">
+                {{ topic }}:
+            </a>
+        </p>
+
+        <h5 class="mb-4" style="color: #a776f5;">Adicionar nova entrada</h5>
+        
+        <form action="{% url 'new_entry' topic.id %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" 
+                    class="btn text-white" 
+                    style="background-color: #a776f5; padding: 8px 16px;">
+                Adicionar
+            </button>
+        </form>
+    </div>
+</div>
 
 {% endblock content %}
