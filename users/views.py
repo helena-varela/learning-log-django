@@ -14,6 +14,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             print('logado com sucesso')
+            return redirect('index')
         else:
             print("credenciais invalidas")
 
