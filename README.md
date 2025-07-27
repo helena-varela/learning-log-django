@@ -19,17 +19,17 @@ Aplicação web simples de diário de aprendizagem feito com Django que permite 
    
 <img width="1000" height="610" alt="image" src="https://github.com/user-attachments/assets/c8d8dde3-4c9f-4e2b-a239-ad85af829435" />
 
-**3. Cadastro e Login**
+**02. Cadastro e Login**
 
    
 ![cadastro-login](https://github.com/user-attachments/assets/7b37f1a1-55bc-4942-a149-ab315792c07c)
 
-**4. Adicionando Tópicos**
+**03. Adicionando Tópicos**
 
    
 ![add-topicos](https://github.com/user-attachments/assets/206ca612-5ff8-4546-ba4e-fcc1181c7295)
 
-**5. Funções CRUD**
+**04. Funções CRUD**
 
    
 ![CRUD](https://github.com/user-attachments/assets/fb7afc8d-bbba-4001-a82b-14648d7f52f5)
